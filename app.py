@@ -5,11 +5,24 @@ import cv2
 import pickle
 import matplotlib.pyplot as plt
 from PIL import Image
+import gdown
+import os
+
+# Step 1: Extract file ID
+file_id = '1S93Iqlu0N4_YxEppmIJUPdpzgOc3ZTlB'  # Your actual file ID
+url = f'https://drive.google.com/uc?id={file_id}'
+output = 'handwriting.csv'
+
+
 
 # Load trained model
 clf = pickle.load(open("decision_tree.pkl", "rb"))
-df = pd.read_csv('handwriting.csv')
+# Step 2: Download only if not already downloaded
+if not os.path.exists(output):
+    gdown.download(url, output, quiet=False)
 
+# Step 3: Load the dataset
+df = pd.read_csv(output)
 
 st.markdown(
     """
